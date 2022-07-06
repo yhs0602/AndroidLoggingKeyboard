@@ -4,19 +4,37 @@ import android.inputmethodservice.InputMethodService
 import android.inputmethodservice.Keyboard
 import android.text.TextUtils
 import android.view.View
-import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.platform.ViewCompositionStrategy
+import android.view.inputmethod.EditorInfo
 
 
+// To use compose in input method see:
+// https://stackoverflow.com/a/66958772/8614565
 class LoggingInputMethodService : InputMethodService() {
+    private val keyboardViewLifecycleOwner = KeyboardViewLifecycleOwner()
+
     override fun onCreateInputView(): View {
-        val view = ComposeView(this).apply {
-            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-            setContent {
-                LoggingKeyboardView()
-            }
-        }
-        return view
+        keyboardViewLifecycleOwner.attachToDecorView(
+            window?.window?.decorView
+        )
+        return KeyboardView(this)
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+        keyboardViewLifecycleOwner.onCreate()
+    }
+
+    override fun onStartInputView(info: EditorInfo?, restarting: Boolean) {
+        keyboardViewLifecycleOwner.onResume()
+    }
+
+    override fun onFinishInputView(finishingInput: Boolean) {
+        keyboardViewLifecycleOwner.onPause()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        keyboardViewLifecycleOwner.onDestroy()
     }
 
     fun onKey(primaryCode: Int) {
