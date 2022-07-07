@@ -8,9 +8,25 @@ class KeyboardView(context: Context) : FrameLayout(context) {
     init {
         val view = ComposeView(context).apply {
             setContent {
-                LoggingKeyboardView()
+                LoggingKeyboardView(::onKey)
             }
         }
         addView(view)
+    }
+
+    val keyListeners = mutableListOf<KeyListener>()
+
+    fun addKeyListener(keyListener: KeyListener) {
+        keyListeners.add(keyListener)
+    }
+
+    fun removeKeyListener(keyListener: KeyListener) {
+        keyListeners.remove(keyListener)
+    }
+
+    private fun onKey(key: Char) {
+        keyListeners.forEach {
+            it.onKey(key)
+        }
     }
 }

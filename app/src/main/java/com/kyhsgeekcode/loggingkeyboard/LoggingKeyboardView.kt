@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun LoggingKeyboardView() {
+fun LoggingKeyboardView(onKey: (Char) -> Unit) {
     val keysMatrix = arrayOf(
         arrayOf("Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"),
         arrayOf("A", "S", "D", "F", "G", "H", "J", "K", "L"),
@@ -51,7 +51,7 @@ fun FixedHeightBox(modifier: Modifier, height: Dp, content: @Composable () -> Un
         val h = height.roundToPx()
         layout(constraints.maxWidth, h) {
             placeables.forEach { placeable ->
-                placeable.place(x = 0, y = kotlin.math.min(0,  h-placeable.height ))
+                placeable.place(x = 0, y = kotlin.math.min(0, h - placeable.height))
             }
         }
     }
@@ -78,7 +78,6 @@ fun KeyboardKey(
                 top = 16.dp,
                 bottom = 16.dp
             )
-
         )
         if (pressed.value) {
             Text(

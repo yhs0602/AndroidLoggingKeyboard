@@ -9,14 +9,16 @@ import android.view.inputmethod.EditorInfo
 
 // To use compose in input method see:
 // https://stackoverflow.com/a/66958772/8614565
-class LoggingInputMethodService : InputMethodService() {
+class LoggingInputMethodService : InputMethodService(), KeyListener {
     private val keyboardViewLifecycleOwner = KeyboardViewLifecycleOwner()
 
     override fun onCreateInputView(): View {
         keyboardViewLifecycleOwner.attachToDecorView(
             window?.window?.decorView
         )
-        return KeyboardView(this)
+        return KeyboardView(this).apply {
+            addKeyListener(this@LoggingInputMethodService)
+        }
     }
 
     override fun onCreate() {
@@ -37,9 +39,9 @@ class LoggingInputMethodService : InputMethodService() {
         keyboardViewLifecycleOwner.onDestroy()
     }
 
-    fun onKey(primaryCode: Int) {
+    override fun onKey(key: Char) {
         val ic = currentInputConnection ?: return
-        when (primaryCode) {
+        when (key.digitToInt()) {
             Keyboard.KEYCODE_DELETE -> {
                 val selectedText = ic.getSelectedText(0)
                 if (TextUtils.isEmpty(selectedText)) {
@@ -51,7 +53,7 @@ class LoggingInputMethodService : InputMethodService() {
                 }
             }
             else -> {
-                val code = primaryCode as Char
+                val code = key
                 ic.commitText(code.toString(), 1)
             }
         }
