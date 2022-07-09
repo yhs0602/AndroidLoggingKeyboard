@@ -33,7 +33,11 @@ fun LoggingKeyboardView(onKey: (Char) -> Unit) {
             FixedHeightBox(modifier = Modifier.fillMaxWidth(), height = 56.dp) {
                 Row(Modifier) {
                     row.forEach { key ->
-                        KeyboardKey(keyboardKey = key, modifier = Modifier.weight(1f))
+                        KeyboardKey(keyboardKey = key, modifier = Modifier
+                            .weight(1f)
+                            .clickable {
+                                onKey(key[0])
+                            })
                     }
                 }
             }
