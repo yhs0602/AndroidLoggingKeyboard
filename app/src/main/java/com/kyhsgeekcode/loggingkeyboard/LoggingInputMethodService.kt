@@ -5,6 +5,7 @@ import android.inputmethodservice.Keyboard
 import android.text.TextUtils
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import org.greenrobot.eventbus.EventBus
 
 
 // To use compose in input method see:
@@ -41,6 +42,7 @@ class LoggingInputMethodService : InputMethodService(), KeyListener {
 
     override fun onKey(key: Char) {
         val ic = currentInputConnection ?: return
+        EventBus.getDefault().post(LoggingKeyEvent(key))
         when (key.code) {
             Keyboard.KEYCODE_DELETE -> {
                 val selectedText = ic.getSelectedText(0)

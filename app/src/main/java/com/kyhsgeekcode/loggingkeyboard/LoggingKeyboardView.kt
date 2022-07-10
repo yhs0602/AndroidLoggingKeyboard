@@ -73,18 +73,19 @@ fun KeyboardKey(
     val interactionSource = remember { MutableInteractionSource() }
     val pressed = interactionSource.collectIsPressedAsState()
     Box(modifier = modifier, contentAlignment = Alignment.BottomCenter) {
-        Text(keyboardKey, Modifier
-            .fillMaxWidth()
-            .padding(2.dp)
-            .border(1.dp, Color.Black)
+        Text(
+            keyboardKey, Modifier
+                .fillMaxWidth()
+                .padding(2.dp)
+                .border(1.dp, Color.Black)
 //            .clickable(interactionSource = interactionSource, indication = null) {}
-            .background(Color.White)
-            .padding(
-                start = 12.dp,
-                end = 12.dp,
-                top = 16.dp,
-                bottom = 16.dp
-            )
+                .background(Color.White)
+                .padding(
+                    start = 12.dp,
+                    end = 12.dp,
+                    top = 16.dp,
+                    bottom = 16.dp
+                )
         )
 //        if (pressed.value) {
 //            Text(

@@ -3,6 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.kyhsgeekcode.loggingkeyboard">
 
+    <permission
+        android:name="PERMISSION_KEYLOGGING"
+        android:label="PERMISSION"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="PERMISSION_KEYLOGGING" />
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -25,16 +31,16 @@
             </intent-filter>
         </activity>
         <service
-            android:exported="true"
             android:name=".LoggingInputMethodService"
+            android:exported="true"
             android:label="Logging Keyboard"
             android:permission="android.permission.BIND_INPUT_METHOD">
             <intent-filter>
-                <action android:name="android.view.InputMethod"/>
+                <action android:name="android.view.InputMethod" />
             </intent-filter>
             <meta-data
                 android:name="android.view.im"
-                android:resource="@xml/method"/>
+                android:resource="@xml/method" />
         </service>
     </application>
 
