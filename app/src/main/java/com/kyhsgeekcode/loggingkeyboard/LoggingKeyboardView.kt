@@ -22,7 +22,7 @@ fun LoggingKeyboardView(onKey: (Char) -> Unit) {
     val keysMatrix = arrayOf(
         arrayOf("Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"),
         arrayOf("A", "S", "D", "F", "G", "H", "J", "K", "L"),
-        arrayOf("Z", "X", "C", "V", "B", "N", "M")
+        arrayOf("Z", "X", "C", "V", "B", "N", "M", "⌫")
     )
     Column(
         modifier = Modifier

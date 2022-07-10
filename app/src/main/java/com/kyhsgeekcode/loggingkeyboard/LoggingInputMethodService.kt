@@ -1,7 +1,6 @@
 package com.kyhsgeekcode.loggingkeyboard
 
 import android.inputmethodservice.InputMethodService
-import android.inputmethodservice.Keyboard
 import android.text.TextUtils
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -43,8 +42,8 @@ class LoggingInputMethodService : InputMethodService(), KeyListener {
     override fun onKey(key: Char) {
         val ic = currentInputConnection ?: return
         EventBus.getDefault().post(LoggingKeyEvent(key))
-        when (key.code) {
-            Keyboard.KEYCODE_DELETE -> {
+        when (key) {
+            '⌫' -> {
                 val selectedText = ic.getSelectedText(0)
                 if (TextUtils.isEmpty(selectedText)) {
                     // no selection, so delete previous character
