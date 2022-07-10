@@ -1,5 +1,6 @@
 package com.kyhsgeekcode.loggingkeyboard
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -25,23 +26,25 @@ fun LoggingKeyboardView(onKey: (Char) -> Unit) {
     )
     Column(
         modifier = Modifier
-            .background(Color(0xFF9575CD))
-            .fillMaxWidth()
+            .background(Color(0xFFCCCCCC))
+            .fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(2.dp)
     ) {
-
         keysMatrix.forEach { row ->
-            FixedHeightBox(modifier = Modifier.fillMaxWidth(), height = 56.dp) {
-                Row(Modifier) {
-                    row.forEach { key ->
-                        KeyboardKey(keyboardKey = key, modifier = Modifier
-                            .weight(1f)
-                            .clickable {
-                                onKey(key[0])
-                            })
-                    }
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp)
+            ) {
+                row.forEach { key ->
+                    KeyboardKey(keyboardKey = key, modifier = Modifier
+                        .weight(1f)
+                        .clickable {
+                            Log.d("LoggingKeyboardView", "Clicked $key")
+                            onKey(key[0])
+                        })
                 }
             }
-
         }
     }
 }
@@ -69,12 +72,12 @@ fun KeyboardKey(
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     val pressed = interactionSource.collectIsPressedAsState()
-    Box(modifier = modifier.fillMaxHeight(), contentAlignment = Alignment.BottomCenter) {
+    Box(modifier = modifier, contentAlignment = Alignment.BottomCenter) {
         Text(keyboardKey, Modifier
             .fillMaxWidth()
             .padding(2.dp)
             .border(1.dp, Color.Black)
-            .clickable(interactionSource = interactionSource, indication = null) {}
+//            .clickable(interactionSource = interactionSource, indication = null) {}
             .background(Color.White)
             .padding(
                 start = 12.dp,
@@ -83,19 +86,19 @@ fun KeyboardKey(
                 bottom = 16.dp
             )
         )
-        if (pressed.value) {
-            Text(
-                keyboardKey, Modifier
-                    .fillMaxWidth()
-                    .border(1.dp, Color.Black)
-                    .background(Color.White)
-                    .padding(
-                        start = 16.dp,
-                        end = 16.dp,
-                        top = 16.dp,
-                        bottom = 48.dp
-                    )
-            )
-        }
+//        if (pressed.value) {
+//            Text(
+//                keyboardKey, Modifier
+//                    .fillMaxWidth()
+//                    .border(1.dp, Color.Black)
+//                    .background(Color.White)
+//                    .padding(
+//                        start = 16.dp,
+//                        end = 16.dp,
+//                        top = 16.dp,
+//                        bottom = 48.dp
+//                    )
+//            )
+//        }
     }
 }

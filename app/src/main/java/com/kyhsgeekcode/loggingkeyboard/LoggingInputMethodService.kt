@@ -41,7 +41,7 @@ class LoggingInputMethodService : InputMethodService(), KeyListener {
 
     override fun onKey(key: Char) {
         val ic = currentInputConnection ?: return
-        when (key.digitToInt()) {
+        when (key.code) {
             Keyboard.KEYCODE_DELETE -> {
                 val selectedText = ic.getSelectedText(0)
                 if (TextUtils.isEmpty(selectedText)) {
