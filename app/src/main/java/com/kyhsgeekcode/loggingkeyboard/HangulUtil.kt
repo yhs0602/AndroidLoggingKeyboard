@@ -1,7 +1,5 @@
 package com.kyhsgeekcode.loggingkeyboard
 
-import java.lang.Integer.parseInt
-
 private val chosung = listOf(
     "ㄱ",
     "ㄲ",
@@ -77,43 +75,6 @@ private val jonsung = listOf(
     "ㅎ"
 )
 
-enum class HanState {
-    REQUIRE_CHOSUNG,
-    REQUIRE_JUNGSUNG,
-}
-
-fun tryMerge(letterList: List<Char>) {
-    // 초성으로 올 수 있는 것부터만 할 수 있음
-    // 왜냐면 나머지로 시작하는 것들은 애초에 앞에 그냥 붙여야 함
-    val result = StringBuilder()
-    var state = HanState.REQUIRE_CHOSUNG
-    for (c in letterList) {
-        val asString = c.toString()
-        when (state) {
-            HanState.REQUIRE_CHOSUNG -> {
-                val chosungIndex = chosung.indexOf(asString)
-                if (chosungIndex == -1) {
-                    throw IllegalArgumentException("$asString is not a chosung 초성으로 시작해야 함")
-                }
-                state = HanState.REQUIRE_JUNGSUNG
-            }
-            HanState.REQUIRE_JUNGSUNG -> {
-
-            }
-        }
-
-        if (choSungIndex != -1) {
-            state = HanState.REQUIRE_JUNGSUNG
-        }
-        if (asString !in chosung && asString !in jungsung && asString !in jonsung) {
-            result.append(c)
-            continue
-        }
-
-
-    }
-}
-
 
 // https://note.heyo.me/%ed%95%9c%ea%b8%80-%ea%b0%80%ec%83%81%ed%82%a4%eb%b3%b4%eb%93%9c-%eb%a7%8c%eb%93%a4%ea%b8%b0-2/
 // 초중종성 INDEX값을 문자료 변환
@@ -123,18 +84,15 @@ fun makeChar(i: Int, m: Int, t: Int): Char {
 }
 
 fun iChrIndex(chr: Char): Int {
-    val index = ((chr.code - 0xAC00) / 28) / 21
-    return parseInt(index)
+    return ((chr.code - 0xAC00) / 28) / 21
 }
 
 fun mChrIndex(chr: Char): Int {
-    val index = ((chr.code - 0xAC00) / 28) % 21
-    return parseInt(index)
+    return ((chr.code - 0xAC00) / 28) % 21
 }
 
 fun tChrIndex(chr: Char): Int {
-    val index = (chr.code - 0xAC00) % 28
-    return parseInt(index)
+    return (chr.code - 0xAC00) % 28
 }
 
 /* var
