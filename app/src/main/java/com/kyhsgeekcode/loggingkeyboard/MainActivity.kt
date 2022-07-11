@@ -1,6 +1,7 @@
 package com.kyhsgeekcode.loggingkeyboard
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -10,6 +11,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import com.github.kimkevin.hangulparser.HangulParser
 import com.kyhsgeekcode.loggingkeyboard.ui.theme.LoggingKeyboardTheme
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -19,6 +21,9 @@ import org.greenrobot.eventbus.ThreadMode
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val hangul: String = HangulParser.assemble(listOf("ㅎ", "ㅏ", "ㄱ", "ㅗ"))
+        Log.d("hangul", hangul)
+
         setContent {
             LoggingKeyboardTheme {
                 // A surface container using the 'background' color from the theme

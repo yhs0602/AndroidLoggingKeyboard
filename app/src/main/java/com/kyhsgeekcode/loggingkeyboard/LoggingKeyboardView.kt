@@ -16,6 +16,7 @@ import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import java.util.*
+import com.github.kimkevin.hangulparser.HangulParser;
 
 enum class Language {
 
