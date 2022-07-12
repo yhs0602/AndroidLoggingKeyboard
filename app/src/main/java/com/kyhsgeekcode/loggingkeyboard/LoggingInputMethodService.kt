@@ -53,9 +53,6 @@ class LoggingInputMethodService : InputMethodService(), KeyListener {
                     ic.commitText("", 1)
                 }
             }
-            '⇧' -> {
-
-            }
             else -> {
                 val code = key
                 ic.commitText(code.toString(), 1)
