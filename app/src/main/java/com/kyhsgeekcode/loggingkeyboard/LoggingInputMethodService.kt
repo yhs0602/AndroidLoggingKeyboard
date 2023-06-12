@@ -1,5 +1,6 @@
 package com.kyhsgeekcode.loggingkeyboard
 
+import HangulMaker
 import android.inputmethodservice.InputMethodService
 import android.text.TextUtils
 import android.view.View
@@ -11,6 +12,7 @@ import org.greenrobot.eventbus.EventBus
 // https://stackoverflow.com/a/66958772/8614565
 class LoggingInputMethodService : InputMethodService(), KeyListener {
     private val keyboardViewLifecycleOwner = KeyboardViewLifecycleOwner()
+    private var hangulMaker: HangulMaker? = null
 
     override fun onCreateInputView(): View {
         keyboardViewLifecycleOwner.attachToDecorView(
@@ -41,6 +43,9 @@ class LoggingInputMethodService : InputMethodService(), KeyListener {
 
     override fun onKey(key: Char) {
         val ic = currentInputConnection ?: return
+        if (hangulMaker == null) {
+            hangulMaker = HangulMaker(ic)
+        }
         EventBus.getDefault().post(LoggingKeyEvent(key))
         when (key) {
             '⌫' -> {
@@ -52,6 +57,9 @@ class LoggingInputMethodService : InputMethodService(), KeyListener {
                     // delete the selection
                     ic.commitText("", 1)
                 }
+            }
+            ' ' -> {
+                hangulMaker?.commitSpace()
             }
             else -> {
                 val code = key

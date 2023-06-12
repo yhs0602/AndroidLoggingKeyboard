@@ -1,6 +1,6 @@
 import android.view.inputmethod.InputConnection
 
-open class HangulMaker {
+class HangulMaker(private val inputConnection: InputConnection) {
     private var cho: Char = '\u0000'
     private var jun: Char = '\u0000'
     private var jon: Char = '\u0000'
@@ -90,12 +90,7 @@ open class HangulMaker {
      * 3: 모음 + 자음 + 모음입력상태(초 중 종성)
      * 초성과 종성에 들어갈 수 있는 문자가 다르기 때문에 필요에 맞게 수정이 필요함.(chos != jons)
      */
-    protected var state = 0
-    private lateinit var inputConnection: InputConnection
-
-    constructor(inputConnection: InputConnection) {
-        this.inputConnection = inputConnection
-    }
+    private var state = 0
 
     fun clear() {
         cho = '\u0000'
@@ -339,35 +334,37 @@ open class HangulMaker {
                 return false
             }
             'ㄹ' -> {
-                if (c == 'ㄱ') {
-                    jon = 'ㄺ'
-                    return true
+                when (c) {
+                    'ㄱ' -> {
+                        jon = 'ㄺ'
+                        return true
+                    }
+                    'ㅁ' -> {
+                        jon = 'ㄻ'
+                        return true
+                    }
+                    'ㅂ' -> {
+                        jon = 'ㄼ'
+                        return true
+                    }
+                    'ㅅ' -> {
+                        jon = 'ㄽ'
+                        return true
+                    }
+                    'ㅌ' -> {
+                        jon = 'ㄾ'
+                        return true
+                    }
+                    'ㅍ' -> {
+                        jon = 'ㄿ'
+                        return true
+                    }
+                    'ㅎ' -> {
+                        jon = 'ㅀ'
+                        return true
+                    }
+                    else -> return false
                 }
-                if (c == 'ㅁ') {
-                    jon = 'ㄻ'
-                    return true
-                }
-                if (c == 'ㅂ') {
-                    jon = 'ㄼ'
-                    return true
-                }
-                if (c == 'ㅅ') {
-                    jon = 'ㄽ'
-                    return true
-                }
-                if (c == 'ㅌ') {
-                    jon = 'ㄾ'
-                    return true
-                }
-                if (c == 'ㅍ') {
-                    jon = 'ㄿ'
-                    return true
-                }
-                if (c == 'ㅎ') {
-                    jon = 'ㅀ'
-                    return true
-                }
-                return false
             }
             'ㅂ' -> {
                 if (c == 'ㅅ') {

@@ -16,46 +16,42 @@ import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import java.util.*
-import com.github.kimkevin.hangulparser.HangulParser;
 
-enum class Language {
 
-}
+val keysMatrixUpper = arrayOf(
+    arrayOf("Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"),
+    arrayOf("A", "S", "D", "F", "G", "H", "J", "K", "L"),
+    arrayOf("⬆", "Z", "X", "C", "V", "B", "N", "M", "⌫")
+)
+val keysMatrixLower = arrayOf(
+    arrayOf("q", "w", "e", "r", "t", "y", "u", "i", "o", "p"),
+    arrayOf("a", "s", "d", "f", "g", "h", "j", "k", "l"),
+    arrayOf("⇧", "z", "x", "c", "v", "b", "n", "m", "⌫")
+)
+val keysMatrixKorean = arrayOf(
+    arrayOf("ㅂ", "ㅈ", "ㄷ", "ㄱ", "ㅅ", "ㅛ", "ㅕ", "ㅑ", "ㅐ", "ㅔ"),
+    arrayOf("ㅁ", "ㄴ", "ㅇ", "ㄹ", "ㅎ", "ㅗ", "ㅓ", "ㅏ", "ㅣ"),
+    arrayOf("⇧", "ㅋ", "ㅌ", "ㅊ", "ㅍ", "ㅠ", "ㅜ", "ㅡ", "⌫")
+)
+val keysMatrixKoreanUpper = arrayOf(
+    arrayOf("ㅃ", "ㅉ", "ㄸ", "ㄲ", "ㅆ", "ㅛ", "ㅕ", "ㅑ", "ㅒ", "ㅖ"),
+    arrayOf("ㅁ", "ㄴ", "ㅇ", "ㄹ", "ㅎ", "ㅗ", "ㅓ", "ㅏ", "ㅣ"),
+    arrayOf("⬆", "ㅋ", "ㅌ", "ㅊ", "ㅍ", "ㅠ", "ㅜ", "ㅡ", "⌫")
+)
+val keysMatrixNumberSymbol = arrayOf(
+    arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "0"),
+    arrayOf("@", "#", "$", "_", "&", "-", "+", "(", ")", "/"),
+    arrayOf("⇧", "*", "\"", "\'", ":", ";", "!", "?", "⌫")
+)
+
+val keysMatrixNumberSymbolUpper = arrayOf(
+    arrayOf("~", "`", "|", "•", "√", "π", "÷", "×", "¶", "△"),
+    arrayOf("£", "¢", "€", "¥", "^", "°", "=", "{", "}", "\\"),
+    arrayOf("⬆", "%", "©", "®", "™", "✓", "[", "]", "⌫")
+)
 
 @Composable
 fun LoggingKeyboardView(onKey: (Char) -> Unit) {
-    val keysMatrixUpper = arrayOf(
-        arrayOf("Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"),
-        arrayOf("A", "S", "D", "F", "G", "H", "J", "K", "L"),
-        arrayOf("⬆", "Z", "X", "C", "V", "B", "N", "M", "⌫")
-    )
-    val keysMatrixLower = arrayOf(
-        arrayOf("q", "w", "e", "r", "t", "y", "u", "i", "o", "p"),
-        arrayOf("a", "s", "d", "f", "g", "h", "j", "k", "l"),
-        arrayOf("⇧", "z", "x", "c", "v", "b", "n", "m", "⌫")
-    )
-    val keysMatrixKorean = arrayOf(
-        arrayOf("ㅂ", "ㅈ", "ㄷ", "ㄱ", "ㅅ", "ㅛ", "ㅕ", "ㅑ", "ㅐ", "ㅔ"),
-        arrayOf("ㅁ", "ㄴ", "ㅇ", "ㄹ", "ㅎ", "ㅗ", "ㅓ", "ㅏ", "ㅣ"),
-        arrayOf("⇧", "ㅋ", "ㅌ", "ㅊ", "ㅍ", "ㅠ", "ㅜ", "ㅡ", "⌫")
-    )
-    val keysMatrixKoreanUpper = arrayOf(
-        arrayOf("ㅃ", "ㅉ", "ㄸ", "ㄲ", "ㅆ", "ㅛ", "ㅕ", "ㅑ", "ㅒ", "ㅖ"),
-        arrayOf("ㅁ", "ㄴ", "ㅇ", "ㄹ", "ㅎ", "ㅗ", "ㅓ", "ㅏ", "ㅣ"),
-        arrayOf("⬆", "ㅋ", "ㅌ", "ㅊ", "ㅍ", "ㅠ", "ㅜ", "ㅡ", "⌫")
-    )
-    val keysMatrixNumberSymbol = arrayOf(
-        arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "0"),
-        arrayOf("@", "#", "$", "_", "&", "-", "+", "(", ")", "/"),
-        arrayOf("⇧", "*", "\"", "\'", ":", ";", "!", "?", "⌫")
-    )
-
-    val keysMatrixNumberSymbolUpper = arrayOf(
-        arrayOf("~", "`", "|", "•", "√", "π", "÷", "×", "¶", "△"),
-        arrayOf("£", "¢", "€", "¥", "^", "°", "=", "{", "}", "\\"),
-        arrayOf("⬆", "%", "©", "®", "™", "✓", "[", "]", "⌫")
-    )
-
     var isShift by remember {
         mutableStateOf(false)
     }
